@@ -2,6 +2,7 @@ package de.maibornwolff.treesitter.excavationsite.integration.metrics.adapters
 
 import de.maibornwolff.treesitter.excavationsite.shared.domain.CalculationConfig
 import de.maibornwolff.treesitter.excavationsite.shared.domain.CalculationExtensions
+import de.maibornwolff.treesitter.excavationsite.shared.domain.FunctionBodyRule
 import de.maibornwolff.treesitter.excavationsite.shared.domain.IgnoreRule
 import de.maibornwolff.treesitter.excavationsite.shared.domain.LeafNodeRule
 import org.treesitter.TSNode
@@ -23,7 +24,8 @@ object CalculationExtensionsFactory {
         ignoreNodeForRealLinesOfCode = buildIgnoreFunction(config.ignoreForRloc),
         ignoreNodeForParameterOfFunctions = buildIgnoreFunction(config.ignoreForParameters),
         ignoreNodeForMessageChainCall = buildIgnoreFunction(config.ignoreForMessageChainCall),
-        countNodeAsLeafNode = buildLeafNodeFunction(config.countAsLeafNode)
+        countNodeAsLeafNode = buildLeafNodeFunction(config.countAsLeafNode),
+        isFunctionBodyNode = buildFunctionBodyFunction(config.functionBodyRules)
     )
 
     private fun buildIgnoreFunction(rules: List<IgnoreRule>): (TSNode, String) -> Boolean {
@@ -73,4 +75,25 @@ object CalculationExtensionsFactory {
             }
         }
     }
+
+    private fun buildFunctionBodyFunction(rules: List<FunctionBodyRule>): (TSNode, String) -> Boolean {
+        if (rules.isEmpty()) {
+            return { _, _ -> false }
+        }
+        return { node, _ ->
+            rules.any { rule ->
+                val parent = node.parent
+                if (parent.isNull || parent.type != rule.parentNodeType) {
+                    false
+                } else {
+                    val bodyNode = parent.getChildByFieldName(rule.fieldName)
+                    !bodyNode.isNull && isSameNode(bodyNode, node)
+                }
+            }
+        }
+    }
+
+    private fun isSameNode(left: TSNode, right: TSNode): Boolean = left.type == right.type &&
+        left.startByte == right.startByte &&
+        left.endByte == right.endByte
 }

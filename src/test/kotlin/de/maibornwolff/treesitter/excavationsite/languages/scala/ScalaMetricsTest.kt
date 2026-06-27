@@ -47,6 +47,55 @@ class ScalaMetricsTest {
     }
 
     @Test
+    fun `should calculate per-function metrics for expression-bodied functions`() {
+        // Arrange
+        val code = """
+            object Main:
+              def f(x: Int): Int = if x > 0 then x else 0
+              def g(x: Int): Int =
+                if x > 0 then x else 0
+              def h(x: Int): Int = {
+                if (x > 0) x else 0
+              }
+        """
+
+        // Act
+        val result = parse(code)
+
+        // Assert
+        assertThat(result.numberOfFunctions).isEqualTo(3.0)
+        assertThat(result.logicComplexity).isEqualTo(3.0)
+        assertThat(result.complexity).isEqualTo(6.0)
+        assertThat(result.realLinesOfCode).isEqualTo(7.0)
+
+        assertThat(result.perFunctionMetrics["max_complexity_per_function"]).isEqualTo(2.0)
+        assertThat(result.perFunctionMetrics["min_complexity_per_function"]).isEqualTo(1.0)
+        assertThat(result.perFunctionMetrics["mean_complexity_per_function"]).isEqualTo(1.5)
+        assertThat(result.perFunctionMetrics["median_complexity_per_function"]).isEqualTo(1.5)
+
+        assertThat(result.perFunctionMetrics["max_rloc_per_function"]).isEqualTo(2.0)
+        assertThat(result.perFunctionMetrics["min_rloc_per_function"]).isEqualTo(1.0)
+        assertThat(result.perFunctionMetrics["mean_rloc_per_function"]).isEqualTo(1.5)
+        assertThat(result.perFunctionMetrics["median_rloc_per_function"]).isEqualTo(1.5)
+    }
+
+    @Test
+    fun `should parse sbt build syntax`() {
+        // Arrange
+        val code = """
+            ThisBuild / scalaVersion := "3.3.3"
+            libraryDependencies += "org.typelevel" %% "cats-core" % "2.12.0"
+        """
+
+        // Act
+        val result = parse(code)
+
+        // Assert
+        assertThat(result.numberOfFunctions).isEqualTo(0.0)
+        assertThat(result.realLinesOfCode).isEqualTo(2.0)
+    }
+
+    @Test
     fun `should count pattern matching cases and guards for complexity`() {
         // Arrange
         val code = """

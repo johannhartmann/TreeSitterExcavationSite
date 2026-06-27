@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.EnumSource
 
 /**
  * Contract tests for robustness, determinism, error handling, and zero-case behavior.
- * These tests ensure the library handles edge cases gracefully across all 19 languages.
+ * These tests ensure the library handles edge cases gracefully across all supported languages.
  */
 class RobustnessContractTest {
     @Nested

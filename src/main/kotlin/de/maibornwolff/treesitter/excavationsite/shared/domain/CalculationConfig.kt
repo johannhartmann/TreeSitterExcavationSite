@@ -14,6 +14,11 @@ data class CalculationConfig(
      */
     val hasFunctionBodyStartOrEndNode: Boolean = true,
     /**
+     * Rules for identifying function body nodes that are not represented by
+     * language-wide function body node types.
+     */
+    val functionBodyRules: List<FunctionBodyRule> = emptyList(),
+    /**
      * Rules for ignoring nodes during complexity calculation.
      */
     val ignoreForComplexity: List<IgnoreRule> = emptyList(),

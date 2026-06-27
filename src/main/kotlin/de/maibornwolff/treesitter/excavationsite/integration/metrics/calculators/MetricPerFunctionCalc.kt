@@ -29,7 +29,7 @@ abstract class MetricPerFunctionCalc {
 
         if (isInFunction) {
             checkLeavingFunction(startRow, node)
-            checkEnteringFunctionBody(node, nodeType, nodeTypeProvider)
+            checkEnteringFunctionBody(nodeContext, nodeTypeProvider)
         }
 
         if (
@@ -55,11 +55,21 @@ abstract class MetricPerFunctionCalc {
         }
     }
 
-    private fun checkEnteringFunctionBody(node: TSNode, nodeType: String, nodeTypeProvider: MetricNodeTypes) {
-        if (!isInFunctionBody && NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.functionBodyNodeTypes)) {
+    private fun checkEnteringFunctionBody(nodeContext: CalculationContext, nodeTypeProvider: MetricNodeTypes) {
+        if (!isInFunctionBody && isFunctionBodyNode(nodeContext, nodeTypeProvider)) {
             isInFunctionBody = true
         }
     }
+
+    protected fun isFunctionBodyNode(nodeContext: CalculationContext, nodeTypeProvider: MetricNodeTypes): Boolean =
+        NodeTypeMatcher.isNodeTypeAllowed(
+            nodeContext.node,
+            nodeContext.nodeType,
+            nodeTypeProvider.functionBodyNodeTypes,
+            nodeContext.sourceCode,
+            nodeContext.sourceBytes
+        ) ||
+            nodeContext.isFunctionBodyNode(nodeContext.node, nodeContext.nodeType)
 
     private fun handleEnteringNextFunction(endRow: Int, node: TSNode) {
         isInFunction = true

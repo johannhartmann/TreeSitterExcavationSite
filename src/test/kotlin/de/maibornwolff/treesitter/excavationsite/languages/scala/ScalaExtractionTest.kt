@@ -44,6 +44,39 @@ class ScalaExtractionTest {
     }
 
     @Test
+    fun `should extract operator identifiers and declarations`() {
+        // Arrange
+        val code = """
+            trait Foo:
+              def ++(other: Foo): Foo
+              val size: Int
+              var count: Int
+
+            class :+:(head: Int)
+        """
+
+        // Act
+        val result = extract(code)
+
+        // Assert
+        assertThat(result.identifiers).containsExactly("Foo", "++", "other", "size", "count", ":+:", "head")
+    }
+
+    @Test
+    fun `should extract class parameters`() {
+        // Arrange
+        val code = """
+            case class User(name: String, age: Int)
+        """
+
+        // Act
+        val result = extract(code)
+
+        // Assert
+        assertThat(result.identifiers).containsExactly("User", "name", "age")
+    }
+
+    @Test
     fun `should extract line comments block comments and strings`() {
         // Arrange
         val code = """
@@ -85,5 +118,20 @@ class ScalaExtractionTest {
             "select * from users where name = ${'$'}name",
             "first\nsecond"
         )
+    }
+
+    @Test
+    fun `should extract strings from sbt build syntax`() {
+        // Arrange
+        val code = """
+            ThisBuild / scalaVersion := "3.3.3"
+            libraryDependencies += "org.typelevel" %% "cats-core" % "2.12.0"
+        """
+
+        // Act
+        val result = extract(code)
+
+        // Assert
+        assertThat(result.strings).containsExactly("3.3.3", "org.typelevel", "cats-core", "2.12.0")
     }
 }

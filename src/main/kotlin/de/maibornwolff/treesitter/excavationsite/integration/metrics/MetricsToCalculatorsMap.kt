@@ -28,24 +28,26 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
         AvailableFileMetrics.COMPLEXITY to { node: TSNode, nodeType: String, startRow: Int, endRow: Int ->
             complexityCalc.calculateFunctionComplexityForNode(
                 CalculationContext(
-                    node,
-                    nodeType,
-                    startRow,
-                    endRow,
+                    node = node,
+                    nodeType = nodeType,
+                    startRow = startRow,
+                    endRow = endRow,
                     shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity,
                     sourceCode = sourceCode,
-                    sourceBytes = sourceBytes
+                    sourceBytes = sourceBytes,
+                    isFunctionBodyNode = calcExtensions.isFunctionBodyNode
                 )
             )
         },
         AvailableFileMetrics.LOGIC_COMPLEXITY to { node: TSNode, nodeType: String, _: Int, _: Int ->
             complexityCalc.calculateMetricForNode(
                 CalculationContext(
-                    node,
-                    nodeType,
+                    node = node,
+                    nodeType = nodeType,
                     shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity,
                     sourceCode = sourceCode,
-                    sourceBytes = sourceBytes
+                    sourceBytes = sourceBytes,
+                    isFunctionBodyNode = calcExtensions.isFunctionBodyNode
                 )
             )
         },
@@ -87,15 +89,16 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
         AvailableFileMetrics.REAL_LINES_OF_CODE to { node: TSNode, nodeType: String, startRow: Int, endRow: Int ->
             realLinesOfCodeCalc.calculateMetricForNode(
                 CalculationContext(
-                    node,
-                    nodeType,
-                    startRow,
-                    endRow,
-                    calcExtensions.ignoreNodeForRealLinesOfCode,
-                    calcExtensions.countNodeAsLeafNode,
-                    calcExtensions.hasFunctionBodyStartOrEndNode,
+                    node = node,
+                    nodeType = nodeType,
+                    startRow = startRow,
+                    endRow = endRow,
+                    shouldIgnoreNode = calcExtensions.ignoreNodeForRealLinesOfCode,
+                    countNodeAsLeafNode = calcExtensions.countNodeAsLeafNode,
+                    functionBodyUsesBrackets = calcExtensions.hasFunctionBodyStartOrEndNode,
                     sourceCode = sourceCode,
-                    sourceBytes = sourceBytes
+                    sourceBytes = sourceBytes,
+                    isFunctionBodyNode = calcExtensions.isFunctionBodyNode
                 )
             )
         }
@@ -104,13 +107,14 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
     fun processPerFunctionMetricsForNode(node: TSNode, nodeType: String, startRow: Int, endRow: Int) {
         parametersPerFunctionCalc.processMetricForNode(
             CalculationContext(
-                node,
-                nodeType,
-                startRow,
-                endRow,
-                calcExtensions.ignoreNodeForParameterOfFunctions,
+                node = node,
+                nodeType = nodeType,
+                startRow = startRow,
+                endRow = endRow,
+                shouldIgnoreNode = calcExtensions.ignoreNodeForParameterOfFunctions,
                 sourceCode = sourceCode,
-                sourceBytes = sourceBytes
+                sourceBytes = sourceBytes,
+                isFunctionBodyNode = calcExtensions.isFunctionBodyNode
             )
         )
     }
