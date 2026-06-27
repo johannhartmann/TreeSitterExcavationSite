@@ -33,7 +33,7 @@ class RealLinesOfCodeCalc(val nodeTypeProvider: MetricNodeTypes) :
         updateInFunctionStatusForRloc(nodeContext, nodeTypeProvider)
 
         if (nodeContext.shouldIgnoreNode(node, nodeType) ||
-            NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.commentLineNodeTypes)
+            NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.commentLineNodeTypes, nodeContext.sourceCode)
         ) {
             return 0
         }
@@ -90,7 +90,7 @@ class RealLinesOfCodeCalc(val nodeTypeProvider: MetricNodeTypes) :
             val startCol = node.startPoint.column
             val endCol = node.endPoint.column
 
-            if (NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.functionBodyNodeTypes) &&
+            if (NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.functionBodyNodeTypes, nodeContext.sourceCode) &&
                 !functionBodyBoundariesSet
             ) {
                 setFunctionBodyBoundaries(startRow, startCol, endRow, endCol)

@@ -701,6 +701,13 @@ class RobustnessContractTest {
                         if true {}
                     }
             """.trimIndent()
+            Language.SCALA -> """
+                    // Comment
+                    object Test:
+                        def foo(): Unit =
+                            val s = "hello"
+                            if true then ()
+            """.trimIndent()
         }
     }
 }

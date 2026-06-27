@@ -33,7 +33,7 @@ class ComplexityCalc(val nodeTypeProvider: MetricNodeTypes) :
             return 0
         }
 
-        return if (NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, allowedNodeTypes)) {
+        return if (NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, allowedNodeTypes, nodeContext.sourceCode)) {
             if (isInFunction && isInFunctionBody) addToMetricForFunction(1)
             1
         } else {

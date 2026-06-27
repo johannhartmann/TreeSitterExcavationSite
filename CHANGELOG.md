@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 
 - Rust language support for text extraction (identifiers, comments, and string literals) as the 19th supported language, via the `tree-sitter-rust` grammar. Metrics and dependency analysis are out of scope; `TreeSitterMetrics.parse` returns LOC/RLOC only for Rust.
+- Scala language support for metrics and text extraction (`.scala`, `.sbt`) via the `tree-sitter-scala` grammar.
 
 ### Fixed
 

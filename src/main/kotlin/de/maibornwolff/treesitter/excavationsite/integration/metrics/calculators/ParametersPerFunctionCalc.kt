@@ -16,7 +16,7 @@ class ParametersPerFunctionCalc(val nodeTypeProvider: MetricNodeTypes) : MetricP
 
         if (isInFunction &&
             !isInFunctionBody &&
-            NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.functionParameterNodeTypes) &&
+            NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.functionParameterNodeTypes, nodeContext.sourceCode) &&
             !nodeContext.shouldIgnoreNode(node, nodeType)
         ) {
             addToMetricForFunction(1)

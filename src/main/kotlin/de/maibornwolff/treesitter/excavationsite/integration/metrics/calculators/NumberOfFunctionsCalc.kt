@@ -11,6 +11,17 @@ class NumberOfFunctionsCalc(val nodeTypeProvider: MetricNodeTypes) : MetricPerFi
 
         if (nodeContext.shouldIgnoreNode(node, nodeType)) return 0
 
-        return if (NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.numberOfFunctionsNodeTypes)) 1 else 0
+        return if (
+            NodeTypeMatcher.isNodeTypeAllowed(
+                node,
+                nodeType,
+                nodeTypeProvider.numberOfFunctionsNodeTypes,
+                nodeContext.sourceCode
+            )
+        ) {
+            1
+        } else {
+            0
+        }
     }
 }

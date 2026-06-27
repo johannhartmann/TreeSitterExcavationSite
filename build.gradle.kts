@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.treesitter.swift)
     implementation(libs.treesitter.bash)
     implementation(libs.treesitter.rust)
+    implementation(libs.treesitter.scala)
     implementation(libs.treesitter.csharp)
     implementation(libs.treesitter.cpp)
     implementation(libs.treesitter.c)

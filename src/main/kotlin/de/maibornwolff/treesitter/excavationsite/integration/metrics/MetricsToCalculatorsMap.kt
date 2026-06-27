@@ -13,6 +13,8 @@ import de.maibornwolff.treesitter.excavationsite.shared.domain.CalculationExtens
 import org.treesitter.TSNode
 
 class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensions: CalculationExtensions) {
+    var sourceCode: String = ""
+
     val complexityCalc = ComplexityCalc(nodeTypeProvider)
     val commentCalc = CommentLinesCalc(nodeTypeProvider)
     val numberOfFunctionsCalc = NumberOfFunctionsCalc(nodeTypeProvider)
@@ -29,7 +31,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     nodeType,
                     startRow,
                     endRow,
-                    shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity
+                    shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity,
+                    sourceCode = sourceCode
                 )
             )
         },
@@ -38,7 +41,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                 CalculationContext(
                     node,
                     nodeType,
-                    shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity
+                    shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity,
+                    sourceCode = sourceCode
                 )
             )
         },
@@ -49,7 +53,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     nodeType,
                     startRow,
                     endRow,
-                    calcExtensions.ignoreNodeForCommentLines
+                    calcExtensions.ignoreNodeForCommentLines,
+                    sourceCode = sourceCode
                 )
             )
         },
@@ -58,7 +63,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                 CalculationContext(
                     node,
                     nodeType,
-                    shouldIgnoreNode = calcExtensions.ignoreNodeForNumberOfFunctions
+                    shouldIgnoreNode = calcExtensions.ignoreNodeForNumberOfFunctions,
+                    sourceCode = sourceCode
                 )
             )
         },
@@ -67,7 +73,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                 CalculationContext(
                     node,
                     nodeType,
-                    shouldIgnoreNode = calcExtensions.ignoreNodeForMessageChainCall
+                    shouldIgnoreNode = calcExtensions.ignoreNodeForMessageChainCall,
+                    sourceCode = sourceCode
                 )
             )
         },
@@ -80,7 +87,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     endRow,
                     calcExtensions.ignoreNodeForRealLinesOfCode,
                     calcExtensions.countNodeAsLeafNode,
-                    calcExtensions.hasFunctionBodyStartOrEndNode
+                    calcExtensions.hasFunctionBodyStartOrEndNode,
+                    sourceCode = sourceCode
                 )
             )
         }
@@ -93,7 +101,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                 nodeType,
                 startRow,
                 endRow,
-                calcExtensions.ignoreNodeForParameterOfFunctions
+                calcExtensions.ignoreNodeForParameterOfFunctions,
+                sourceCode = sourceCode
             )
         )
     }

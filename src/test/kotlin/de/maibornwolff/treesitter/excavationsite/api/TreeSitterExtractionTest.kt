@@ -74,6 +74,7 @@ class TreeSitterExtractionTest {
         assertThat(TreeSitterExtraction.isExtractionSupported(Language.KOTLIN)).isTrue()
         assertThat(TreeSitterExtraction.isExtractionSupported(Language.PYTHON)).isTrue()
         assertThat(TreeSitterExtraction.isExtractionSupported(Language.TYPESCRIPT)).isTrue()
+        assertThat(TreeSitterExtraction.isExtractionSupported(Language.SCALA)).isTrue()
     }
 
     @Test
@@ -82,6 +83,8 @@ class TreeSitterExtractionTest {
         assertThat(TreeSitterExtraction.isExtractionSupported(".java")).isTrue()
         assertThat(TreeSitterExtraction.isExtractionSupported(".kt")).isTrue()
         assertThat(TreeSitterExtraction.isExtractionSupported(".py")).isTrue()
+        assertThat(TreeSitterExtraction.isExtractionSupported(".scala")).isTrue()
+        assertThat(TreeSitterExtraction.isExtractionSupported(".sbt")).isTrue()
         assertThat(TreeSitterExtraction.isExtractionSupported(".unknown")).isFalse()
     }
 
@@ -95,9 +98,9 @@ class TreeSitterExtractionTest {
             Language.JAVA, Language.KOTLIN, Language.TYPESCRIPT, Language.JAVASCRIPT,
             Language.PYTHON, Language.GO, Language.PHP, Language.RUBY, Language.SWIFT,
             Language.BASH, Language.CSHARP, Language.CPP, Language.C, Language.OBJECTIVE_C,
-            Language.VUE, Language.ABL, Language.TSX, Language.DELPHI, Language.RUST
+            Language.VUE, Language.ABL, Language.TSX, Language.DELPHI, Language.RUST, Language.SCALA
         )
-        assertThat(languages).hasSize(19)
+        assertThat(languages).hasSize(20)
     }
 
     @Test
@@ -110,9 +113,9 @@ class TreeSitterExtractionTest {
             ".java", ".kt", ".kts", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
             ".py", ".go", ".php", ".rb", ".swift", ".sh", ".bash", ".cs",
             ".cpp", ".cc", ".cxx", ".hpp", ".hxx", ".h", ".c", ".m", ".mm",
-            ".vue", ".p", ".cls", ".w", ".i", ".pas", ".dpr", ".rs"
+            ".vue", ".p", ".cls", ".w", ".i", ".pas", ".dpr", ".rs", ".scala", ".sbt"
         )
-        assertThat(extensions).hasSize(34)
+        assertThat(extensions).hasSize(36)
     }
 
     @Test

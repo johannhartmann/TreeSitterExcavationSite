@@ -16,6 +16,7 @@ import de.maibornwolff.treesitter.excavationsite.languages.php.PhpDefinition
 import de.maibornwolff.treesitter.excavationsite.languages.python.PythonDefinition
 import de.maibornwolff.treesitter.excavationsite.languages.ruby.RubyDefinition
 import de.maibornwolff.treesitter.excavationsite.languages.rust.RustDefinition
+import de.maibornwolff.treesitter.excavationsite.languages.scala.ScalaDefinition
 import de.maibornwolff.treesitter.excavationsite.languages.swift.SwiftDefinition
 import de.maibornwolff.treesitter.excavationsite.languages.tsx.TsxDefinition
 import de.maibornwolff.treesitter.excavationsite.languages.vue.VueDefinition
@@ -37,6 +38,7 @@ import org.treesitter.TreeSitterPhp
 import org.treesitter.TreeSitterPython
 import org.treesitter.TreeSitterRuby
 import org.treesitter.TreeSitterRust
+import org.treesitter.TreeSitterScala
 import org.treesitter.TreeSitterSwift
 import org.treesitter.TreeSitterTsx
 import org.treesitter.TreeSitterTypescript
@@ -71,6 +73,7 @@ object LanguageRegistry {
         Language.ABL -> TreeSitterAbl()
         Language.DELPHI -> TreeSitterPascal()
         Language.RUST -> TreeSitterRust()
+        Language.SCALA -> TreeSitterScala()
     }
 
     /**
@@ -96,5 +99,6 @@ object LanguageRegistry {
         Language.ABL -> AblDefinition
         Language.DELPHI -> DelphiDefinition
         Language.RUST -> RustDefinition
+        Language.SCALA -> ScalaDefinition
     }
 }

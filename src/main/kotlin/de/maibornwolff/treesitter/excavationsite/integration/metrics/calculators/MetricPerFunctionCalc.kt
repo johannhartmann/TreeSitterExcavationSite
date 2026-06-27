@@ -32,7 +32,15 @@ abstract class MetricPerFunctionCalc {
             checkEnteringFunctionBody(node, nodeType, nodeTypeProvider)
         }
 
-        if (!isInFunction && NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.numberOfFunctionsNodeTypes)) {
+        if (
+            !isInFunction &&
+            NodeTypeMatcher.isNodeTypeAllowed(
+                node,
+                nodeType,
+                nodeTypeProvider.numberOfFunctionsNodeTypes,
+                nodeContext.sourceCode
+            )
+        ) {
             handleEnteringNextFunction(endRow, node)
         }
     }
