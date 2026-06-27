@@ -112,6 +112,35 @@ object StringParser {
     fun stripCSharpInterpolatedString(text: String): String = text.removePrefix("\$\"").removeSuffix(DOUBLE_QUOTE)
 
     /**
+     * Strips Scala string delimiters and optional interpolation prefixes.
+     *
+     * Handles plain strings, multiline strings, and interpolated strings like
+     * s"content", raw"content", or sql"""content""".
+     *
+     * @param text The string literal text including quotes and optional interpolator
+     * @return The string content without interpolator prefix and surrounding quotes
+     */
+    fun stripScalaString(text: String): String {
+        val quoteStart = text.indexOf(DOUBLE_QUOTE)
+        if (quoteStart == -1) return text
+
+        val prefix = text.substring(0, quoteStart)
+        val literal = if (prefix.isEmpty() || prefix.all { it.isLetterOrDigit() || it == '_' }) {
+            text.substring(quoteStart)
+        } else {
+            text
+        }
+
+        return when {
+            literal.startsWith(TRIPLE_DOUBLE_QUOTE) && literal.endsWith(TRIPLE_DOUBLE_QUOTE) ->
+                literal.removeSurrounding(TRIPLE_DOUBLE_QUOTE)
+            literal.startsWith(DOUBLE_QUOTE) && literal.endsWith(DOUBLE_QUOTE) ->
+                literal.removeSurrounding(DOUBLE_QUOTE)
+            else -> literal
+        }
+    }
+
+    /**
      * Strips Python string prefixes (f, r, b, u, fr, rf, br, rb) and quotes.
      *
      * @param text The string literal text including any prefix and quotes

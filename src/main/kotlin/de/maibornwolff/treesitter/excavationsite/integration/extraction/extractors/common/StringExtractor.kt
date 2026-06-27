@@ -33,6 +33,7 @@ class StringExtractor(private val stringFormats: Map<String, StringFormats>) {
             is StringFormats.CSharpRaw -> StringParser.stripCSharpRawString(text)
             is StringFormats.CSharpVerbatim -> StringParser.stripCSharpVerbatimString(text)
             is StringFormats.CSharpInterpolated -> StringParser.stripCSharpInterpolatedString(text)
+            is StringFormats.Scala -> StringParser.stripScalaString(text)
             is StringFormats.Python -> StringParser.stripPythonString(text)
             is StringFormats.FromChild -> extractFromChild(node, sourceCode, format.childType)
             is StringFormats.Trimmed -> text.trim()

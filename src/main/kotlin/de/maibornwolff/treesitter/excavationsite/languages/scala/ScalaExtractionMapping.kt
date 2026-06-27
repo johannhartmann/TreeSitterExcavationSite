@@ -37,7 +37,7 @@ object ScalaExtractionMapping : ExtractionMapping {
         put("block_comment", Extract.Comment(CommentFormats.Block))
 
         // Strings
-        put(STRING, Extract.StringLiteral(format = StringFormats.Quoted()))
-        put(INTERPOLATED_STRING_EXPRESSION, Extract.StringLiteral(format = StringFormats.Quoted()))
+        put(STRING, Extract.StringLiteral(format = StringFormats.Scala))
+        put(INTERPOLATED_STRING_EXPRESSION, Extract.StringLiteral(format = StringFormats.Scala))
     }
 }

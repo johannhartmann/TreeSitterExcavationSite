@@ -28,6 +28,9 @@ sealed class StringFormats {
     /** C# interpolated string $"content". */
     data object CSharpInterpolated : StringFormats()
 
+    /** Scala string with optional interpolator prefix, e.g. s"content" or raw"""content""". */
+    data object Scala : StringFormats()
+
     /** Python string with optional prefixes (f, r, b, etc). */
     data object Python : StringFormats()
 

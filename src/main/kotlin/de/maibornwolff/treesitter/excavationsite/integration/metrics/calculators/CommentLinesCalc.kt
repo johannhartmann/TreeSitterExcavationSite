@@ -17,7 +17,13 @@ class CommentLinesCalc(val nodeTypeProvider: MetricNodeTypes) : MetricPerFileCal
 
         if (
             startRow > lastCountedLine &&
-            NodeTypeMatcher.isNodeTypeAllowed(node, nodeType, nodeTypeProvider.commentLineNodeTypes, nodeContext.sourceCode)
+            NodeTypeMatcher.isNodeTypeAllowed(
+                node,
+                nodeType,
+                nodeTypeProvider.commentLineNodeTypes,
+                nodeContext.sourceCode,
+                nodeContext.sourceBytes
+            )
         ) {
             lastCountedLine = startRow
             return endRow - startRow + 1

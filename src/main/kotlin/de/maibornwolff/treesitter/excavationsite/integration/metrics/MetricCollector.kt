@@ -42,6 +42,7 @@ class MetricCollector(private val treeSitterLanguage: TSLanguage, private val de
         val rootNode = TreeSitterParser.parse(content, treeSitterLanguage)
         rootNodeType = rootNode.type
         calculatorsMap.sourceCode = content
+        calculatorsMap.sourceBytes = content.toByteArray(Charsets.UTF_8)
 
         val metricValues = mutableMapOf<AvailableFileMetrics, Int>()
         AvailableFileMetrics.entries.forEach { metricValues[it] = 0 }

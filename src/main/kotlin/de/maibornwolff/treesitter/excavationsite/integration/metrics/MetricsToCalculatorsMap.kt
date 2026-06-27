@@ -14,6 +14,7 @@ import org.treesitter.TSNode
 
 class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensions: CalculationExtensions) {
     var sourceCode: String = ""
+    var sourceBytes: ByteArray = byteArrayOf()
 
     val complexityCalc = ComplexityCalc(nodeTypeProvider)
     val commentCalc = CommentLinesCalc(nodeTypeProvider)
@@ -32,7 +33,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     startRow,
                     endRow,
                     shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity,
-                    sourceCode = sourceCode
+                    sourceCode = sourceCode,
+                    sourceBytes = sourceBytes
                 )
             )
         },
@@ -42,7 +44,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     node,
                     nodeType,
                     shouldIgnoreNode = calcExtensions.ignoreNodeForComplexity,
-                    sourceCode = sourceCode
+                    sourceCode = sourceCode,
+                    sourceBytes = sourceBytes
                 )
             )
         },
@@ -54,7 +57,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     startRow,
                     endRow,
                     calcExtensions.ignoreNodeForCommentLines,
-                    sourceCode = sourceCode
+                    sourceCode = sourceCode,
+                    sourceBytes = sourceBytes
                 )
             )
         },
@@ -64,7 +68,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     node,
                     nodeType,
                     shouldIgnoreNode = calcExtensions.ignoreNodeForNumberOfFunctions,
-                    sourceCode = sourceCode
+                    sourceCode = sourceCode,
+                    sourceBytes = sourceBytes
                 )
             )
         },
@@ -74,7 +79,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     node,
                     nodeType,
                     shouldIgnoreNode = calcExtensions.ignoreNodeForMessageChainCall,
-                    sourceCode = sourceCode
+                    sourceCode = sourceCode,
+                    sourceBytes = sourceBytes
                 )
             )
         },
@@ -88,7 +94,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                     calcExtensions.ignoreNodeForRealLinesOfCode,
                     calcExtensions.countNodeAsLeafNode,
                     calcExtensions.hasFunctionBodyStartOrEndNode,
-                    sourceCode = sourceCode
+                    sourceCode = sourceCode,
+                    sourceBytes = sourceBytes
                 )
             )
         }
@@ -102,7 +109,8 @@ class MetricsToCalculatorsMap(nodeTypeProvider: MetricNodeTypes, val calcExtensi
                 startRow,
                 endRow,
                 calcExtensions.ignoreNodeForParameterOfFunctions,
-                sourceCode = sourceCode
+                sourceCode = sourceCode,
+                sourceBytes = sourceBytes
             )
         )
     }

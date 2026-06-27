@@ -10,5 +10,6 @@ data class CalculationContext(
     val shouldIgnoreNode: (TSNode, String) -> Boolean,
     val countNodeAsLeafNode: (TSNode) -> Boolean = { false },
     val functionBodyUsesBrackets: Boolean = true,
-    val sourceCode: String = ""
+    val sourceCode: String = "",
+    val sourceBytes: ByteArray = byteArrayOf()
 )

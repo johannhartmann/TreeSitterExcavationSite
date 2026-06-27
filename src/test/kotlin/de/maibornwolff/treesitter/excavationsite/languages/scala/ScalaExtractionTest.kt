@@ -62,4 +62,28 @@ class ScalaExtractionTest {
         assertThat(result.comments).containsExactly("line comment", "block comment")
         assertThat(result.strings).containsExactly("hello // not a comment")
     }
+
+    @Test
+    fun `should extract interpolated and multiline strings without Scala prefixes`() {
+        // Arrange
+        val code = """
+            object Strings:
+              val name = "Ada"
+              val greeting = s"hello ${'$'}name"
+              val query = sql"select * from users where name = ${'$'}name"
+              val multiline = raw${"\"\"\""}first
+            second${"\"\"\""}
+        """
+
+        // Act
+        val result = extract(code)
+
+        // Assert
+        assertThat(result.strings).containsExactly(
+            "Ada",
+            "hello ${'$'}name",
+            "select * from users where name = ${'$'}name",
+            "first\nsecond"
+        )
+    }
 }

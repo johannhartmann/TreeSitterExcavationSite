@@ -16,7 +16,8 @@ class NumberOfFunctionsCalc(val nodeTypeProvider: MetricNodeTypes) : MetricPerFi
                 node,
                 nodeType,
                 nodeTypeProvider.numberOfFunctionsNodeTypes,
-                nodeContext.sourceCode
+                nodeContext.sourceCode,
+                nodeContext.sourceBytes
             )
         ) {
             1

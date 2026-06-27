@@ -38,7 +38,8 @@ abstract class MetricPerFunctionCalc {
                 node,
                 nodeType,
                 nodeTypeProvider.numberOfFunctionsNodeTypes,
-                nodeContext.sourceCode
+                nodeContext.sourceCode,
+                nodeContext.sourceBytes
             )
         ) {
             handleEnteringNextFunction(endRow, node)
