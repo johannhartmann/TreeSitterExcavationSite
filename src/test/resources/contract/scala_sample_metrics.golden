@@ -7,7 +7,7 @@ loc=23.0
 logic_complexity=7.0
 long_method=0.0
 long_parameter_list=0.0
-message_chains=2.0
+message_chains=1.0
 number_of_functions=3.0
 rloc=18.0
 

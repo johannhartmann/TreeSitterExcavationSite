@@ -48,7 +48,7 @@ object ScalaMetricMapping : MetricMapping {
 
         // Message chains
         put("call_expression", setOf(Metric.MessageChain, Metric.MessageChainCall))
-        put("field_expression", setOf(Metric.MessageChain, Metric.MessageChainCall))
+        put("field_expression", setOf(Metric.MessageChain))
 
         // Comment lines
         put("comment", setOf(Metric.CommentLine))

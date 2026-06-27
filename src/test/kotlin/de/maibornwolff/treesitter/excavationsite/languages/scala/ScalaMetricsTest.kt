@@ -185,7 +185,7 @@ class ScalaMetricsTest {
         val code = """
             object Main:
               def render(user: User): String =
-                user.profile.address.street.trim.toLowerCase
+                user.a().profile.b().c().d()
         """
 
         // Act
@@ -193,6 +193,22 @@ class ScalaMetricsTest {
 
         // Assert
         assertThat(result.messageChains).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `should not count property-only chains as message chains`() {
+        // Arrange
+        val code = """
+            object Main:
+              def render(user: User): String =
+                user.profile.address.street.name
+        """
+
+        // Act
+        val result = parse(code)
+
+        // Assert
+        assertThat(result.messageChains).isEqualTo(0.0)
     }
 
     @Test
